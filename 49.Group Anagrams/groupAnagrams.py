@@ -1,15 +1,21 @@
+from collections import defaultdict
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        d = {}
-        for word in strs:
-            sortedW = tuple(sorted(word))
-            if sortedW not in d:
-                d[sortedW] = []
-            d[sortedW].append(word)
-        
         res = []
-        for lst in d.values():
-            res.append(lst)
+        anagram = {}
+        for w in strs:
+            wDict = defaultdict(int)
+            for c in sorted(w):
+                wDict[c] += 1
+
+            tupleDict = tuple(wDict.items())
+            if tupleDict not in anagram:
+                anagram[tupleDict] = []
+            anagram[tupleDict].append(w)
+        
+        for k,v in anagram.items():
+            res.append(v)
+        
         return res
 
 ### Notes
