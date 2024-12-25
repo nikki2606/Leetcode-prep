@@ -1,30 +1,18 @@
-# Time: O(n) Space: O(n)
 class Solution:
     def reverseVowels(self, s: str) -> str:
+        vowels = set(['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'])
+        left, right = 0, len(s)-1
+        s_list = list(s)
         if len(s) < 2:
             return s
-        
-        left, right = 0, len(s)-1
-        sList = list(s)
         while left <= right:
-            if not self.isVowel(s[left]):
-                left += 1
-                continue
-            
-            if not self.isVowel(s[right]):
-                right -= 1
-                continue
-
-            if left < len(s) and right >= 0:
-                sList[left], sList[right] = sList[right], sList[left]
-            left += 1
-            right -= 1
-        
-        return ''.join(sList)
-    
-    def isVowel(self, char):
-        char = char.lower()
-        vowel = set(['a','e','i','o','u'])
-        if char in vowel:
-            return True
-        return False
+            # if left < len(s) and right >= 0:
+                if s_list[left] not in vowels:
+                    left += 1
+                elif s_list[right] not in vowels:
+                    right -= 1
+                elif s_list[left] in vowels and s_list[right] in vowels:
+                    s_list[left], s_list[right] = s_list[right], s_list[left]
+                    left += 1
+                    right -= 1
+        return ''.join(s_list)
