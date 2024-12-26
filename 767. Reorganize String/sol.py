@@ -1,32 +1,25 @@
-# Time: O(n) Space: O(n)
-import math
+from collections import Counter
+import heapq
 class Solution:
     def reorganizeString(self, s: str) -> str:
-        charDict = {}
-        maxCount = 0
-        for char in s:
-            if char not in charDict:
-                charDict[char] = 0
-            charDict[char] += 1
-        maxCount = max(list(charDict.values()))
-        maxCountPos = list(charDict.values()).index(maxCount)
-        letter = list(charDict.keys())[maxCountPos]
-        if maxCount > math.ceil(len(s)/2):
-            return ""
+        charcount = Counter(s)
+        n = len(s)
+        h = []
+        for char, count in charcount.items():
+            if count > (n+1)//2:
+                return ""
+            heapq.heappush(h, (-count, char))
         
-        res = [""]*len(s)
-        pos = 0
-        while charDict[letter] != 0:
-            res[pos] = letter
-            pos += 2
-            charDict[letter] -= 1
-        
-        for char, coun in charDict.items():
-            while coun > 0:
-                if pos >= len(s):
-                    pos = 1
-                res[pos] = char
-                pos += 2
+        res = [None]*n
+        pointer = 0
+        while h:
+            coun, char = heapq.heappop(h)
+            coun = -coun
+            while coun:
+                res[pointer] = char
+                pointer += 2
+                if pointer >= n:
+                    pointer = 1
                 coun -= 1
-        
         return "".join(res)
+    # Time: O(NlogN)
