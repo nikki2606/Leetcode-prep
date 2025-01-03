@@ -1,10 +1,11 @@
-# Time: O(n) Space: O(1)
 class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
-        k = 0
+        if not nums:
+            return 0
         
-        for i in range(len(nums)):
-            if nums[i] != val:
-                nums[k] = nums[i]
-                k += 1
-        return k
+        i = 0
+        for j in range(len(nums)):
+            if nums[j] != val:
+                nums[i] = nums[j]
+                i += 1
+        return i
