@@ -1,14 +1,14 @@
-from heapq import heappush, heappop
 from collections import Counter
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        # bucket sort O(n)
         numCount = Counter(nums)
-        h = []
-        for num, freq in numCount.items():
-            heappush(h, (-freq, num))
+        bucket = [[] for i in range(len(nums)+1)]
+        for num,freq in numCount.items():
+            bucket[freq].append(num)
         res = []
-        while k:
-            k -= 1
-            val = heappop(h)
-            res.append(val[1])
-        return res
+        for bket in bucket:
+            for num in bket:
+                res.append(num)
+        res = res[::-1]
+        return res[:k]
