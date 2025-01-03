@@ -1,47 +1,47 @@
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
-        
-        def check1to9Valid(lst):
-            digits = set()
-            for i in range(9):
-                if lst[i] == ".":
-                    continue
-                elif lst[i] in digits:
-                    return False
-                else:
-                    digits.add(lst[i])
-                    
-            return True
-        
-        def getSubBox(m):
-            box = []
-            i = (m//3)*3
-            for j in range(i,i+3):
-                a = (m%3)*3
-                for k in range(a,a+3):
-                    box.append(board[j][k])
-            return box
-        
-        #rows, cols and boxes
+
+        # check Rows
         for i in range(9):
-            # row
-            r = board[:][i]
-            
-            # col
-            c = [row[i] for row in board]
-            
-            # box
-            b = getSubBox(i)
-            
-            if not (check1to9Valid(r) and check1to9Valid(c)):
-                return False
-            
-            if not (check1to9Valid(b)):
-                return False
+            numSet = set()
+            for j in range(9):
+                if board[i][j] == ".":
+                    continue
+                if board[i][j] in numSet:
+                    return False
+                numSet.add(board[i][j])
+        
+        # check cols
+        for j in range(9):
+            numSet = set()
+            for i in range(9):
+                if board[i][j] == ".":
+                    continue
+                if board[i][j] in numSet:
+                    return False
+                numSet.add(board[i][j])
+        
+        # check boxes
+        '''
+                r       c
+        i = 0  0 1 2  0 1 2
+          = 1  0 1 2  3 4 5
+          = 2. 0 1 2  6 7 8
+          = 3. 3 4 5  0 1 2
+        '''
+        for i in range(9):
+            numSet = set()
+            row1 = i//3 * 3
+            row2 = i//3 * 3 + 3
+            col1 = i%3 if i%3 == 0 else i%3 * 3
+            col2 = i%3 + 3 if i%3 == 0 else i%3 * 3 + 3
+            for r in range(row1, row2):
+                for c in range(col1, col2):
+                    if board[r][c] == ".":
+                        continue
+                    if board[r][c] in numSet:
+                        return False
+                    numSet.add(board[r][c])
             
         return True
             
-
-### Notes
-# Time: O(n^3)
-# Space: O(n)
