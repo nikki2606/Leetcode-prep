@@ -1,18 +1,14 @@
+from heapq import heappush, heappop
+from collections import Counter
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        if not nums:
-            return nums
-        
-        d = {}
-        for num in nums:
-            if num not in d:
-                d[num] = 0
-            d[num] += 1
-        
-        sortedD = {k:v for k,v in sorted(d.items(), key= lambda item:item[1], reverse=True)}
-        lstD = [v for v in sortedD.keys()]
-        return lstD[:k]
-
-### Notes
-# Time: O(n)
-# Space:O(1)
+        numCount = Counter(nums)
+        h = []
+        for num, freq in numCount.items():
+            heappush(h, (-freq, num))
+        res = []
+        while k:
+            k -= 1
+            val = heappop(h)
+            res.append(val[1])
+        return res
