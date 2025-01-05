@@ -1,11 +1,14 @@
 class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
-        if not nums:
-            return 0
-        
+        val_freq = 0
+        n = len(nums)
         i = 0
-        for j in range(len(nums)):
-            if nums[j] != val:
-                nums[i] = nums[j]
+        right = n-1
+        while i < (n-val_freq):
+            if nums[i] == val:
+                nums[i], nums[right] = nums[right], nums[i]
+                right -= 1
+                val_freq += 1
+            else:
                 i += 1
-        return i
+        return n-val_freq
