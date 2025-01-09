@@ -1,15 +1,16 @@
 class Solution:
     def isToeplitzMatrix(self, matrix: List[List[int]]) -> bool:
-        # diagonal ==> r1-c1 == r2-c2
         if not matrix:
             return True
+        
+        n = len(matrix)
+        m = len(matrix[0])
+        if m == 1 or n == 1:
+            return True
 
-        diagonals = {}
-        for r, row in enumerate(matrix):
-            for c, val in enumerate(row):
-                if r-c not in diagonals:
-                    diagonals[r-c] = val
-                elif diagonals[r-c] != val:
+        # check along row 0
+        for i in range(1,n):
+            for j in range(1,m):
+                if matrix[i-1][j-1] != matrix[i][j]:
                     return False
         return True
-
