@@ -1,14 +1,21 @@
 from collections import Counter
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        # bucket sort O(n)
         numCount = Counter(nums)
         bucket = [[] for i in range(len(nums)+1)]
         for num,freq in numCount.items():
             bucket[freq].append(num)
+
         res = []
-        for bket in bucket:
-            for num in bket:
-                res.append(num)
-        res = res[::-1]
-        return res[:k]
+        for i in range(len(bucket)-1, -1 ,-1):
+            if not bucket[i]:
+                continue
+            
+            m = len(bucket[i])
+            if k <= m:
+                res.extend(bucket[i][:k])
+                break
+            else:
+                res.extend(bucket[i])
+                k -= m
+        return res
