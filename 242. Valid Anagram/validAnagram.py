@@ -1,18 +1,7 @@
+from collections import Counter
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        countVecS = [0]*26
-        countVecT = [0]*26
-
-        for c in s:
-            countVecS[ord(c)-ord('a')] += 1
+        countS = Counter(s)
+        countT = Counter(t)
         
-        for c in t:
-            countVecT[ord(c)-ord('a')] += 1
-
-        if countVecS == countVecT:
-            return True
-        return False
-    
-### Notes
-# Time: O(n)
-# Space: O(1)
+        return countS == countT
