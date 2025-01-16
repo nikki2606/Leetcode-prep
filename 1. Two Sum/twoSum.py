@@ -1,12 +1,11 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        numIndexDict = {}
-        for i, num in enumerate(nums):
-            if target-num in numIndexDict:
-                return [i, numIndexDict[target-num]]
-            numIndexDict[num] = i
+        if not nums:
+            return [-1, -1]
+        numDict = {}
+        for i in range(len(nums)):
+            if target-nums[i] in numDict:
+                return [numDict[target-nums[i]], i]
+            numDict[nums[i]] = i
+        
         return [-1,-1]
-
-### Notes
-# Time: O(n)
-# Space: O(n)
