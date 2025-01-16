@@ -1,23 +1,18 @@
-from collections import defaultdict
+from collections import Counter
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        if not strs:
+            return []
+
         res = []
         anagram = {}
-        for w in strs:
-            wDict = defaultdict(int)
-            for c in sorted(w):
-                wDict[c] += 1
-
-            tupleDict = tuple(wDict.items())
-            if tupleDict not in anagram:
-                anagram[tupleDict] = []
-            anagram[tupleDict].append(w)
+        for word in strs:
+            sorted_word = tuple(sorted(word))
+            if sorted_word not in anagram:
+                anagram[sorted_word] = []
+            anagram[sorted_word].append(word)
         
-        for k,v in anagram.items():
-            res.append(v)
+        for key, ana in anagram.items():
+            res.append(ana)
         
         return res
-
-### Notes
-# Time: O(n)
-# Space: O(n)
