@@ -1,9 +1,14 @@
-from collections import Counter
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        count_s = Counter(s)
-        count_t = Counter(t)
-        return count_s == count_t
+        countvecS = [0]*26
+        countvecT = [0]*26
+        for char in s:
+            countvecS[ord(char)-ord('a')] += 1
+
+        for char in t:
+            countvecT[ord(char)-ord('a')] += 1
+            
+        return countvecS == countvecT
 
 # Time: O(n+m)
 # Space: O(1) coz at most 26 chars
