@@ -2,10 +2,14 @@ class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         if not nums:
             return [-1, -1]
-        numDict = {}
+
+        indices = {}
         for i in range(len(nums)):
-            if target-nums[i] in numDict:
-                return [numDict[target-nums[i]], i]
-            numDict[nums[i]] = i
-        
-        return [-1,-1]
+            b = target - nums[i]
+            if b in indices:
+                return [indices[b], i]
+            indices[nums[i]] = i
+        return [-1, -1]
+
+# Time : O(n)
+# Space: O(n)
